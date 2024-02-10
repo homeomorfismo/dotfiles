@@ -1,0 +1,90 @@
+#alias python="/Users/gpin/.pyenv/versions/3.8.18/bin/python3.8"
+#alias pip="/Users/gpin/.pyenv/versions/3.8.18/bin/pip3"
+
+# alias act-ngs="source ${HOME}/Env/ngs/bin/activate && export PATH=${NETGENDIR}:${PATH} && echo 'NGSolve venv activated...'"
+
+# Save old paths
+export OLD_PATH=${PATH}
+export OLD_PYTHONPATH=${PYTHONPATH}
+export OLD_DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}
+export OLD_DYLD_FRAMEWORK_PATH=${DYLD_FRAMEWORK_PATH}
+
+function deact {
+    # Deactivate venv
+    deactivate
+    # Restore old path
+    export PATH=${OLD_PATH}
+    # Restore old PYTHONPATH
+    export PYTHONPATH=${OLD_PYTHONPATH}
+    # Restore old DYLD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=${OLD_DYLD_LIBRARY_PATH}
+    # Restore old DYLD_FRAMEWORK_PATH
+    export DYLD_FRAMEWORK_PATH=${OLD_DYLD_FRAMEWORK_PATH}
+    echo 'venv deactivated...'
+}
+
+function test {
+    # Activate test venv
+    source ${HOME}/Env/test/bin/activate
+    echo 'test venv activated...'
+    echo 'This is for testing my handwritten python packages...'
+}
+
+function tf {
+    # Activate TensorFlow venv
+    source ${HOME}/Env/tf/bin/activate
+    echo 'TensorFlow venv activated...'
+}
+
+function ngs {
+    # Activate NGSolve venv
+    source ${HOME}/Env/ngs/bin/activate
+    # Add NGSolve to PATH
+    export PATH=${NETGENDIR}:${PATH}
+    # Add NGSolve to DYLD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=${NETGENDIR}:${DYLD_LIBRARY_PATH}
+    # Add NGSolve to DYLD_FRAMEWORK_PATH
+    export DYLD_FRAMEWORK_PATH=${NETGENDIR}/../Frameworks:${DYLD_FRAMEWORK_PATH}
+    # Add NGS Feast to PYTHONPATH
+    export PYTHONPATH=${HOME}/Software/ngs/:${PYTHONPATH}
+    echo 'NGSolve venv activated...'
+}
+
+function petsc-debug {
+    # Activate NGS venv
+    source ${HOME}/Env/ngs/bin/activate
+    # Add PETSc to PATH
+    export PATH=${PETSC_DIR}:${PATH}
+    # Set PETSC_ARCH
+    export PETSC_ARCH=${PETSC_ARCH_DEBUG}
+    # Add SLEPC to PATH
+    export PATH=${SLEPC_DIR}:${PATH}
+    echo 'PETSc-debug activated...'
+}
+
+function petsc-release {
+    # Activate NGS venv
+    source ${HOME}/Env/ngs/bin/activate
+    # Add PETSc to PATH
+    export PATH=${PETSC_DIR}:${PATH}
+    # Set PETSC_ARCH
+    export PETSC_ARCH=${PETSC_ARCH_RELEASE}
+    # Add SLEPC to PATH
+    export PATH=${SLEPC_DIR}:${PATH}
+    # Add Petsc4py to PYTHONPATH
+    export PYTHONPATH=${PETSC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
+    # Add Slepc4py to PYTHONPATH
+    export PYTHONPATH=${SLEPC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
+    echo 'PETSc-release activated...'
+}
+
+function coeus {
+    # SSH to Coeus
+    ssh gpin2@login1.coeus.rc.pdx.edu $1
+    echo 'Oh, Mother, I can feel the soil falling over my head...'
+}
+
+# Remind me of the aliases
+function remind-me {
+    cat ${HOME}/.zsh_aliases
+}
