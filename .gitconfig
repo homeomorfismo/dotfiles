@@ -5,3 +5,5 @@
 	editor = nvim
 [alias]
 	adog = log --all --decorate --oneline --graph
+    dog = log --decorate --oneline --graph
+    dg = log --decorate --graph
