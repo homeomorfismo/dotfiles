@@ -12,14 +12,14 @@ Clone/fork/shallow-clone this repo and do `stow .`.
 
 You can either build [Vim](https://github.com/vim/vim) from scratch.
 I prever [neo-vim](https://github.com/neovim/neovim), as the setting and some small search features are superior.
-Nothing you can't improve with pluggins.
+Nothing you can't improve with plugins.
 
 ### Vim
 
 Check [this tutotial](https://www.freecodecamp.org/news/vimrc-configuration-guide-customize-your-vim-editor/) for 
 more details on how to modify `.vimrc`.
 
-- I usually like `fzf` and it's vim pluggin, but `telescope` is far superior.
+- I usually like `fzf` and it's vim plugin, but `telescope` is far superior.
 
 ### Neo-vim
 
