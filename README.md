@@ -19,10 +19,18 @@ Nothing you can't improve with pluggins.
 Check [this tutotial](https://www.freecodecamp.org/news/vimrc-configuration-guide-customize-your-vim-editor/) for 
 more details on how to modify `.vimrc`.
 
+- I usually like `fzf` and it's vim pluggin, but `telescope` is far superior.
+
 ### Neo-vim
 
 The structure of Neo-vim is far more complicated but also more clean.
 It is based on Lua. See [this tutorial](https://www.youtube.com/watch?v=J9yqSdvAKXY&pp=ygUKbmVvdmltIGx1YQ%3D%3D).
+
+- LSP and cmp [see this](https://github.com/hrsh7th/nvim-cmp)
+- Telescope
+- Obsidian
+- Linters
+
 
 ## Git
 
