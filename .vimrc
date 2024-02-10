@@ -1,3 +1,5 @@
+" .vimrc "
+" I prefer to use nvim, but I have to use vim in some cases, so I keep the same configuration for both
 set nocompatible
 filetype off
 filetype plugin on 
