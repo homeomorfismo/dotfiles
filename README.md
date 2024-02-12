@@ -5,6 +5,7 @@ See [this nice video](https://www.youtube.com/watch?v=y6XCebnB9gs).
 ## Requirements 
 
 We require `git` and `stow`. If using Mac, use `brew`.
+Consider installing `tldr` with `brew`.
 
 Clone/fork/shallow-clone this repo and do `stow .`.
 

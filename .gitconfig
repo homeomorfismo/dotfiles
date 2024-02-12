@@ -1,9 +1,12 @@
 [user]
-	name = Gabriel Esteban Pinochet Soto
-	email = gpin2@pdx.edu
+    name = Gabriel Esteban Pinochet Soto
+    email = gpin2@pdx.edu
 [core]
-	editor = nvim
+    editor = nvim
 [alias]
-	adog = log --all --decorate --oneline --graph
+    adog = log --all --decorate --oneline --graph
     dog = log --decorate --oneline --graph
     dg = log --decorate --graph
+    wdiff = diff --word-diff
+    fpush = push --force-with-lease
+    ffpush = push --force
