@@ -60,3 +60,7 @@ chruby ruby-3.1.3
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
+
+# Add zoxide
+eval "$(zoxide init zsh)"
+

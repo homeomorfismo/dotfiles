@@ -5,14 +5,17 @@ See [this nice video](https://www.youtube.com/watch?v=y6XCebnB9gs).
 ## Requirements 
 
 We require `git` and `stow`. If using Mac, use `brew`.
-Consider installing `tldr` with `brew`.
+Consider installing:
+- `tldr`
+- `fzf`
+- `zoxide`
 
 Clone/fork/shallow-clone this repo and do `stow .`.
 
 ## Vim/Neo-vim
 
 You can either build [Vim](https://github.com/vim/vim) from scratch.
-I prever [neo-vim](https://github.com/neovim/neovim), as the setting and some small search features are superior.
+I prefer [neo-vim](https://github.com/neovim/neovim), as the setting and some small search features are superior.
 Nothing you can't improve with plugins.
 
 ### Vim
@@ -29,9 +32,8 @@ It is based on Lua. See [this tutorial](https://www.youtube.com/watch?v=J9yqSdvA
 
 - LSP and cmp [see this](https://github.com/hrsh7th/nvim-cmp)
 - Telescope
-- Obsidian
+- Obsidian (I removed this because it felt obnoxious)
 - Linters
-
 
 ## Git
 
