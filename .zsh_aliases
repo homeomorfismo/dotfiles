@@ -1,8 +1,3 @@
-#alias python="/Users/gpin/.pyenv/versions/3.8.18/bin/python3.8"
-#alias pip="/Users/gpin/.pyenv/versions/3.8.18/bin/pip3"
-
-# alias act-ngs="source ${HOME}/Env/ngs/bin/activate && export PATH=${NETGENDIR}:${PATH} && echo 'NGSolve venv activated...'"
-
 # Save old paths
 export OLD_PATH=${PATH}
 export OLD_PYTHONPATH=${PYTHONPATH}
@@ -83,6 +78,11 @@ function coeus {
     ssh gpin2@login1.coeus.rc.pdx.edu $1
     echo 'Oh, Mother, I can feel the soil falling over my head...'
 }
+
+# Aliases
+# WolframScript
+alias wscc="'${WSTP_DIR}'/wscc"
+alias wsprep="'${WSTP_DIR}'/wsprep"
 
 # Remind me of the aliases
 function remind-me {

@@ -53,6 +53,9 @@ source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.1.3
 
+# Add WSTP C/C++ library
+export WSTP_DIR=/Applications/Wolfram\ Engine.app/Contents/Resources/Wolfram\ Player.app/Contents/SystemFiles/Links/WSTP/DeveloperKit/MacOSX-x86-64/CompilerAdditions
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
