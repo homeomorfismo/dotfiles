@@ -19,6 +19,12 @@ function deact {
 }
 
 function test {
+    # Append WSTP to PATH
+    export PATH=${WSTP_DIR}:${PATH}
+    # Append WSTP to DYLD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=${WSTP_DIR}:${DYLD_LIBRARY_PATH}
+    # Append WSTP to DYLD_FRAMEWORK_PATH
+    export DYLD_FRAMEWORK_PATH=${WSTP_DIR}:${DYLD_FRAMEWORK_PATH}
     # Activate test venv
     source ${HOME}/Env/test/bin/activate
     echo 'test venv activated...'

@@ -9,8 +9,9 @@ Consider installing:
 - `tldr`
 - `fzf`
 - `zoxide`
+- `tree`
 
-Clone/fork/shallow-clone this repo and do `stow .`.
+Clone/fork/shallow-clone this repo and do `cd dotfiles && stow .`.
 
 ## Vim/Neo-vim
 
@@ -34,10 +35,15 @@ It is based on Lua. See [this tutorial](https://www.youtube.com/watch?v=J9yqSdvA
 - Telescope
 - Obsidian (I removed this because it felt obnoxious)
 - Linters
+    - Pylint, flake8
+    - Cpplint
 
 ## Git
 
 The .gitconfig is simple, but *who doesn't like instant ramen?*
+
+- Please, look `git adog`. It means *all branches, decorate, one-line, graphic*.
+- I implemented similar aliases: `git dog`, `git dg`
 
 ## Nerd Fonts
 
