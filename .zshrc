@@ -56,6 +56,10 @@ chruby ruby-3.1.3
 # Add WSTP C/C++ library
 export WSTP_DIR=/Applications/Wolfram\ Engine.app/Contents/Resources/Wolfram\ Player.app/Contents/SystemFiles/Links/WSTP/DeveloperKit/MacOSX-x86-64/CompilerAdditions
 
+# PSU clusters
+export ODIN=gpin2
+export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -66,4 +70,3 @@ fi
 
 # Add zoxide
 eval "$(zoxide init zsh)"
-

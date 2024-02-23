@@ -81,7 +81,8 @@ function petsc-release {
 
 function coeus {
     # SSH to Coeus
-    ssh gpin2@login1.coeus.rc.pdx.edu $1
+    echo 'SSH to Coeus, user: '${ODIN}
+    ssh ${COEUS} $1
     echo 'Oh, Mother, I can feel the soil falling over my head...'
 }
 
