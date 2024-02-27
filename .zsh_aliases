@@ -4,6 +4,8 @@ export OLD_PYTHONPATH=${PYTHONPATH}
 export OLD_DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}
 export OLD_DYLD_FRAMEWORK_PATH=${DYLD_FRAMEWORK_PATH}
 
+alias run-jekyll="bundle exec jekyll serve --livereload"
+
 function deact {
     # Deactivate venv
     deactivate
