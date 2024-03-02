@@ -27,6 +27,14 @@ function test {
     export DYLD_LIBRARY_PATH=${WSTP_DIR}:${DYLD_LIBRARY_PATH}
     # Append WSTP to DYLD_FRAMEWORK_PATH
     export DYLD_FRAMEWORK_PATH=${WSTP_DIR}:${DYLD_FRAMEWORK_PATH}
+    # Add NGSolve to PATH
+    export PATH=${NETGENDIR}:${PATH}
+    # Add NGSolve to DYLD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=${NETGENDIR}:${DYLD_LIBRARY_PATH}
+    # Add NGSolve to DYLD_FRAMEWORK_PATH
+    export DYLD_FRAMEWORK_PATH=${NETGENDIR}/../Frameworks:${DYLD_FRAMEWORK_PATH}
+    # Add NGS Feast to PYTHONPATH
+    export PYTHONPATH=${HOME}/Software/ngs/:${PYTHONPATH}
     # Activate test venv
     source ${HOME}/Env/test/bin/activate
     echo 'test venv activated...'
