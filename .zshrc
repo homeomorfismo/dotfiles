@@ -41,12 +41,18 @@ export PATH=/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}
 export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.8/site-packages:.:${PYTHONPATH}
 export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
 
+# Define software paths
+export SOFTWARE=${HOME}/Software
+
 # Add petsc, slepc paths
 # Must be activated with petsc function, in .zsh_aliases
-export PETSC_DIR=${HOME}/Software/petsc
+export PETSC_DIR=${SOFTWARE}/petsc
 export PETSC_ARCH_DEBUG=osx-debug
 export PETSC_ARCH_RELEASE=osx-release
-export SLEPC_DIR=${HOME}/Software/slepc
+export SLEPC_DIR=${SOFTWARE}/slepc
+
+# Astyle
+export ASTYLE_MAC=${SOFTWARE}/astyle-code/AStyle/build/mac/bin/AStyle
 
 # ruby
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh

@@ -89,6 +89,15 @@ function petsc-release {
     echo 'PETSc-release activated...'
 }
 
+function astyle {
+    # Check if binary exists
+    if [ -f ${ASTYLE_MAC} ]; then
+        ${ASTYLE_MAC} $1
+    else
+        echo 'Astyle not found... make sure it is installed...'
+    fi
+}
+
 function coeus {
     # SSH to Coeus
     echo 'SSH to Coeus, user: '${ODIN}
