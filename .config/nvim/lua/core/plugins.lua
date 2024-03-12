@@ -23,6 +23,7 @@ return require('packer').startup(function(use)
   use 'github/copilot.vim'
   use 'mfussenegger/nvim-lint'
   use 'nvim-lua/plenary.nvim'
+  use 'prettier/vim-prettier'
   -- use 'epwalsh/obsidian.nvim'
   use 'nvim-telescope/telescope.nvim'
   -- use 'neovim/nvim-lspconfig'
