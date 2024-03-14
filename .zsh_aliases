@@ -91,8 +91,8 @@ function petsc-release {
 
 function astyle {
     # Check if binary exists
-    if [ -f ${ASTYLE_MAC} ]; then
-        ${ASTYLE_MAC} $1
+    if [ -f ${ASTYLE} ]; then
+        ${ASTYLE} $1
     else
         echo 'Astyle not found... make sure it is installed...'
     fi

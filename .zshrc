@@ -1,5 +1,19 @@
-# Add homebrew
-eval $(/opt/homebrew/bin/brew shellenv)
+# .zshrc
+# This file is sourced by zsh when it starts. It sets up the shell environment
+# and defines some useful functions and aliases.
+# Author: Gabriel Pinochet-Soto
+
+### Environment
+# Define operating system
+export SYSTEM=$(uname)
+export MACOS="Darwin"
+export LINUX="Linux"
+
+# Add homebrew in macOS
+if [ $SYSTEM = $MACOS ]; then
+    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+    eval $(/opt/homebrew/bin/brew shellenv)
+fi
 
 # Modify default output
 export PS1="%B%F{cyan}%n%f%b %F{red}%D %* %~%f"$'\n'"%B$%b "
@@ -20,59 +34,121 @@ RPROMPT='${vcs_info_msg_0_}'
 # PROMPT='${vcs_info_msg_0_}%# '
 zstyle ':vcs_info:git:*' formats '%b'
 
-# Add homebrew
-# Not installed yet
-# export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
-
 # Add TeX
-export PATH=/Library/TeX/texbin:$PATH
+case $SYSTEM in
+    $MACOS)
+        if [ -d /Library/TeX/texbin ]; then
+            export PATH=/Library/TeX/texbin:$PATH
+        fi
+        ;;
+    $LINUX)
+        if [ -d /usr/local/texlive/2021/bin/x86_64-linux ]; then
+            export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
+        fi
+        ;;
+esac
 
 # Add some binaries
 export PATH=/usr/local/bin:$PATH
 
 # Add CMake
-export PATH=/Applications/CMake.app/Contents/bin:${PATH}
+if [ $SYSTEM = $MACOS ]; then
+    export PATH=/Applications/CMake.app/Contents/bin:$PATH
+fi
 
 # Add python (see .zprofile)
-export PATH=/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}
+if [ $SYSTEM = $MACOS ]; then
+    export PATH=/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}
+fi
+
+### Other software
+# Define software paths
+export SOFTWARE=${HOME}/Software
 
 # Add ngsolve, feast paths
 # Must be activated with ngs function, in .zsh_aliases
-export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.8/site-packages:.:${PYTHONPATH}
-export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
+export NGS_DIR=${SOFTWARE}/ngs
+case $SYSTEM in
+    $MACOS)
+        export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
+        export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.8/site-packages:.:${PYTHONPATH}
+        ;;
+    $LINUX)
+        export NETGENDIR=${NGS_DIR}/install/bin
+        export PYTHONPATH=${NGS_DIR}/install/lib/python3.8/site-packages:.:${PYTHONPATH}
+        ;;
+esac
 
-# Define software paths
-export SOFTWARE=${HOME}/Software
 
 # Add petsc, slepc paths
 # Must be activated with petsc function, in .zsh_aliases
 export PETSC_DIR=${SOFTWARE}/petsc
-export PETSC_ARCH_DEBUG=osx-debug
-export PETSC_ARCH_RELEASE=osx-release
 export SLEPC_DIR=${SOFTWARE}/slepc
+case $SYSTEM in
+    $MACOS)
+        export PETSC_ARCH_DEBUG=osx-debug
+        export PETSC_ARCH_RELEASE=osx-release
+        ;;
+    $LINUX)
+        export PETSC_ARCH_DEBUG=linux-debug
+        export PETSC_ARCH_RELEASE=linux-release
+        ;;
+esac
 
 # Astyle
-export ASTYLE_MAC=${SOFTWARE}/astyle-code/AStyle/build/mac/bin/AStyle
+if [ -d ${SOFTWARE}/astyle-code ]; then
+    case $SYSTEM in
+        $MACOS)
+            export PATH=${SOFTWARE}/astyle-code/AStyle/build/mac/bin:$PATH
+            export ASTYLE=${SOFTWARE}/astyle-code/AStyle/build/mac/bin/AStyle
+            ;;
+        $LINUX)
+            export PATH=${SOFTWARE}/astyle-code/AStyle/build/linux/bin:$PATH
+            export ASTYLE=${SOFTWARE}/astyle-code/AStyle/build/linux/bin/astyle
+            ;;
+    esac
+fi
 
 # ruby
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.1.3
+case $SYSTEM in
+    $MACOS)
+        export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+        if [ -d /opt/homebrew/opt/chruby ]; then
+            source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+            source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+        fi
+        ;;
+    $LINUX)
+        export PATH=/usr/local/ruby/bin:$PATH
+        if [ -d /usr/local/chruby ]; then
+            source /usr/local/chruby/share/chruby/chruby.sh
+            source /usr/local/chruby/share/chruby/auto.sh
+        fi
+        ;;
+esac
+[ -f $(command -v chruby) ] && chruby ruby-3.1.3
 
 # Add WSTP C/C++ library
-export WSTP_DIR=/Applications/Wolfram\ Engine.app/Contents/Resources/Wolfram\ Player.app/Contents/SystemFiles/Links/WSTP/DeveloperKit/MacOSX-x86-64/CompilerAdditions
+case $SYSTEM in
+    $MACOS)
+        export WSTP_DIR=/Applications/Wolfram\ Engine.app/Contents/Resources/Wolfram\ Player.app/Contents/SystemFiles/Links/WSTP/DeveloperKit/MacOSX-x86-64/CompilerAdditions
+        ;;
+    $LINUX)
+        # TODO: Add WSTP_DIR for Linux
+        export WSTP_DIR=/usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Links/WSTP/DeveloperKit/Linux-x86-64/CompilerAdditions
+        ;;
+esac
 
 # PSU clusters
 export ODIN=gpin2
 export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
 
+### Run last
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Aliases (some reused variables are defined above)
-if [ -f ~/.zsh_aliases ]; then
-    . ~/.zsh_aliases
-fi
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
 
 # Add zoxide
-eval "$(zoxide init zsh)"
+[ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
