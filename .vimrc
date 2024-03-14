@@ -2,7 +2,7 @@
 " I prefer to use nvim, but I have to use vim in some cases, so I keep the same configuration for both
 set nocompatible
 filetype off
-filetype plugin on 
+filetype plugin on
 filetype indent on
 syntax on
 
@@ -47,8 +47,8 @@ Plugin 'mcchrish/nnn.vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'github/copilot.vim'
 " call plug#end()
-call vundle#end()            
-filetype plugin indent on   
+call vundle#end()
+filetype plugin indent on
 
 " Config "
 let g:ale_linters={
