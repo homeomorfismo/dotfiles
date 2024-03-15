@@ -126,7 +126,7 @@ case $SYSTEM in
         fi
         ;;
 esac
-[ -f $(command -v chruby) ] && chruby ruby-3.1.3
+[ $(command -v chruby) ] && chruby ruby-3.1.3
 
 # Add WSTP C/C++ library
 case $SYSTEM in
