@@ -9,12 +9,7 @@ export SYSTEM=$(uname)
 export MACOS="Darwin"
 export LINUX="Linux"
 
-# Add homebrew in macOS
-if [ $SYSTEM = $MACOS ]; then
-    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
-    eval $(/opt/homebrew/bin/brew shellenv)
-fi
-
+### Standard settings
 # Modify default output
 export PS1="%B%F{cyan}%n%f%b %F{red}%D %* %~%f"$'\n'"%B$%b "
 
@@ -34,6 +29,28 @@ RPROMPT='${vcs_info_msg_0_}'
 # PROMPT='${vcs_info_msg_0_}%# '
 zstyle ':vcs_info:git:*' formats '%b'
 
+### Standard paths
+# Add some binaries
+export PATH=/usr/local/bin:$PATH
+
+# Define software paths
+export SOFTWARE=${HOME}/Software
+if [ ! -d ${SOFTWARE} ]; then
+    echo "Creating ${SOFTWARE}"
+    mkdir -p ${SOFTWARE}
+fi
+
+# PSU clusters
+export ODIN=gpin2
+export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
+
+### Non-standard settings
+# Add homebrew in macOS
+if [ $SYSTEM = $MACOS ]; then
+    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+    eval $(/opt/homebrew/bin/brew shellenv)
+fi
+
 # Add TeX
 case $SYSTEM in
     $MACOS)
@@ -42,14 +59,12 @@ case $SYSTEM in
         fi
         ;;
     $LINUX)
+        # TODO: Add TeX path for Linux
         if [ -d /usr/local/texlive/2021/bin/x86_64-linux ]; then
             export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
         fi
         ;;
 esac
-
-# Add some binaries
-export PATH=/usr/local/bin:$PATH
 
 # Add CMake
 if [ $SYSTEM = $MACOS ]; then
@@ -60,10 +75,6 @@ fi
 if [ $SYSTEM = $MACOS ]; then
     export PATH=/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}
 fi
-
-### Other software
-# Define software paths
-export SOFTWARE=${HOME}/Software
 
 # Add ngsolve, feast paths
 # Must be activated with ngs function, in .zsh_aliases
@@ -79,7 +90,6 @@ case $SYSTEM in
         ;;
 esac
 
-
 # Add petsc, slepc paths
 # Must be activated with petsc function, in .zsh_aliases
 export PETSC_DIR=${SOFTWARE}/petsc
@@ -94,6 +104,9 @@ case $SYSTEM in
         export PETSC_ARCH_RELEASE=linux-release
         ;;
 esac
+
+# add FEAST
+export FEASTROOT=${SOFTWARE}/FEAST/4.0
 
 # Astyle
 if [ -d ${SOFTWARE}/astyle-code ]; then
@@ -139,16 +152,16 @@ case $SYSTEM in
         ;;
 esac
 
-# PSU clusters
-export ODIN=gpin2
-export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
-
 ### Run last
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Aliases (some reused variables are defined above)
 [ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
 
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Add zoxide
 [ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
+
+# Add library paths
+# export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
+# export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib
