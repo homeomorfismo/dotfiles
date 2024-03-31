@@ -1,5 +1,4 @@
 .# Comments and blank lines are allowed.
-
 RCS
 .+,v
 
@@ -21,3 +20,6 @@ _darcs
 ^/LICENSE.*
 ^/COPYING
 ^/LICENSE
+
+node_modules$
+json$

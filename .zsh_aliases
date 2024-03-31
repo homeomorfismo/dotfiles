@@ -105,6 +105,10 @@ function coeus {
     echo 'Oh, Mother, I can feel the soil falling over my head...'
 }
 
+function kb-tmux {
+    echo "Tmux cheat sheet..."
+}
+
 # Aliases
 # WolframScript
 alias wscc="'${WSTP_DIR}'/wscc"
