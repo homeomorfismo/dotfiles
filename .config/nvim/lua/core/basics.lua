@@ -8,6 +8,7 @@ vim.opt.shiftwidth = 4
 vim.opt.showcmd = true
 vim.opt.cursorline = true
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.showmode = true
 vim.opt.showmatch = true
