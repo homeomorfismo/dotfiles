@@ -71,16 +71,12 @@ if [ $SYSTEM = $MACOS ]; then
     export PATH=/Applications/CMake.app/Contents/bin:$PATH
 fi
 
-# Add python (see .zprofile)
-if [ $SYSTEM = $MACOS ]; then
-    export PATH=/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}
-fi
-
 # Add ngsolve, feast paths
 # Must be activated with ngs function, in .zsh_aliases
 export NGS_DIR=${SOFTWARE}/ngs
 case $SYSTEM in
     $MACOS)
+        # TODO
         export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
         export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.8/site-packages:.:${PYTHONPATH}
         ;;
@@ -162,6 +158,14 @@ esac
 # Add zoxide
 [ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
 
+# Add python (see .zprofile)
+if [ $SYSTEM = $MACOS ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 # Add library paths
-# export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
-# export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib
+export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib"
