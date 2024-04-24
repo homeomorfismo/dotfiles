@@ -49,6 +49,9 @@ export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
 if [ $SYSTEM = $MACOS ]; then
     export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
     eval $(/opt/homebrew/bin/brew shellenv)
+    # Add library paths
+    export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib"
 fi
 
 # Add TeX
@@ -71,14 +74,21 @@ if [ $SYSTEM = $MACOS ]; then
     export PATH=/Applications/CMake.app/Contents/bin:$PATH
 fi
 
+# # Add python (see .zprofile)
+# if [ $SYSTEM = $MACOS ]; then
+#     export PATH=/usr/local/bin:$PATH
+# fi
+
 # Add ngsolve, feast paths
-# Must be activated with ngs function, in .zsh_aliases
 export NGS_DIR=${SOFTWARE}/ngs
 case $SYSTEM in
     $MACOS)
-        # TODO
         export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
-        export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.8/site-packages:.:${PYTHONPATH}
+        export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.12/site-packages:.:${PYTHONPATH}
+        export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$NETGENDIR
+        export DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH:$NETGENDIR/../Frameworks
+        export PATH=$NETGENDIR:$PATH
+        export PYTHONPATH=$PYTHONPATH:/Users/gpin/Software/ngs
         ;;
     $LINUX)
         export NETGENDIR=${NGS_DIR}/install/bin
@@ -158,14 +168,4 @@ esac
 # Add zoxide
 [ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
 
-# Add python (see .zprofile)
-if [ $SYSTEM = $MACOS ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
-# Add library paths
-export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib"
+# eval "$(oh-my-posh init zsh)"

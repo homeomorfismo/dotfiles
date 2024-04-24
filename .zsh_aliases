@@ -6,19 +6,19 @@ export OLD_DYLD_FRAMEWORK_PATH=${DYLD_FRAMEWORK_PATH}
 
 alias run-jekyll="bundle exec jekyll serve --livereload"
 
-# function deact {
-#     # Deactivate venv
-#     deactivate
-#     # Restore old path
-#     export PATH=${OLD_PATH}
-#     # Restore old PYTHONPATH
-#     export PYTHONPATH=${OLD_PYTHONPATH}
-#     # Restore old DYLD_LIBRARY_PATH
-#     export DYLD_LIBRARY_PATH=${OLD_DYLD_LIBRARY_PATH}
-#     # Restore old DYLD_FRAMEWORK_PATH
-#     export DYLD_FRAMEWORK_PATH=${OLD_DYLD_FRAMEWORK_PATH}
-#     echo 'venv deactivated...'
-# }
+function deact {
+    # Deactivate venv
+    deactivate
+    # Restore old path
+    export PATH=${OLD_PATH}
+    # Restore old PYTHONPATH
+    export PYTHONPATH=${OLD_PYTHONPATH}
+    # Restore old DYLD_LIBRARY_PATH
+    export DYLD_LIBRARY_PATH=${OLD_DYLD_LIBRARY_PATH}
+    # Restore old DYLD_FRAMEWORK_PATH
+    export DYLD_FRAMEWORK_PATH=${OLD_DYLD_FRAMEWORK_PATH}
+    echo 'venv deactivated...'
+}
 
 function test {
     # Append WSTP to PATH
@@ -47,47 +47,39 @@ function test {
 #     echo 'TensorFlow venv activated...'
 # }
 
-# function ngs {
-#     # Activate NGSolve venv
-#     source ${HOME}/Env/ngs/bin/activate
-#     # Add NGSolve to PATH
-#     export PATH=${NETGENDIR}:${PATH}
-#     # Add NGSolve to DYLD_LIBRARY_PATH
-#     export DYLD_LIBRARY_PATH=${NETGENDIR}:${DYLD_LIBRARY_PATH}
-#     # Add NGSolve to DYLD_FRAMEWORK_PATH
-#     export DYLD_FRAMEWORK_PATH=${NETGENDIR}/../Frameworks:${DYLD_FRAMEWORK_PATH}
-#     # Add NGS Feast to PYTHONPATH
-#     export PYTHONPATH=${HOME}/Software/ngs/:${PYTHONPATH}
-#     echo 'NGSolve venv activated...'
-# }
+function ngs {
+    # Activate NGSolve venv
+    source ${HOME}/Env/ngs/bin/activate
+    echo 'NGSolve venv activated...'
+}
 
-# function petsc-debug {
-#     # Activate NGS venv
-#     source ${HOME}/Env/ngs/bin/activate
-#     # Add PETSc to PATH
-#     export PATH=${PETSC_DIR}:${PATH}
-#     # Set PETSC_ARCH
-#     export PETSC_ARCH=${PETSC_ARCH_DEBUG}
-#     # Add SLEPC to PATH
-#     export PATH=${SLEPC_DIR}:${PATH}
-#     echo 'PETSc-debug activated...'
-# }
+function petsc-debug {
+    # Activate NGS venv
+    source ${HOME}/Env/ngs/bin/activate
+    # Add PETSc to PATH
+    export PATH=${PETSC_DIR}:${PATH}
+    # Set PETSC_ARCH
+    export PETSC_ARCH=${PETSC_ARCH_DEBUG}
+    # Add SLEPC to PATH
+    export PATH=${SLEPC_DIR}:${PATH}
+    echo 'PETSc-debug activated...'
+}
 
-# function petsc-release {
-#     # Activate NGS venv
-#     source ${HOME}/Env/ngs/bin/activate
-#     # Add PETSc to PATH
-#     export PATH=${PETSC_DIR}:${PATH}
-#     # Set PETSC_ARCH
-#     export PETSC_ARCH=${PETSC_ARCH_RELEASE}
-#     # Add SLEPC to PATH
-#     export PATH=${SLEPC_DIR}:${PATH}
-#     # Add Petsc4py to PYTHONPATH
-#     export PYTHONPATH=${PETSC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
-#     # Add Slepc4py to PYTHONPATH
-#     export PYTHONPATH=${SLEPC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
-#     echo 'PETSc-release activated...'
-# }
+function petsc-release {
+    # Activate NGS venv
+    source ${HOME}/Env/ngs/bin/activate
+    # Add PETSc to PATH
+    export PATH=${PETSC_DIR}:${PATH}
+    # Set PETSC_ARCH
+    export PETSC_ARCH=${PETSC_ARCH_RELEASE}
+    # Add SLEPC to PATH
+    export PATH=${SLEPC_DIR}:${PATH}
+    # Add Petsc4py to PYTHONPATH
+    export PYTHONPATH=${PETSC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
+    # Add Slepc4py to PYTHONPATH
+    export PYTHONPATH=${SLEPC_DIR}/${PETSC_ARCH}/lib:${PYTHONPATH}
+    echo 'PETSc-release activated...'
+}
 
 function astyle {
     # Check if binary exists
