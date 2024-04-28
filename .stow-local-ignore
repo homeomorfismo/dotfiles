@@ -24,4 +24,8 @@ _darcs
 node_modules$
 json$
 
-\req3.12.txt
+^/req3.12.txt
+\.hyper.js
+\.hyper_plugins$
+
+scripts$

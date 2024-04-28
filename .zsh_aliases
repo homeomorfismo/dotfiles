@@ -106,6 +106,9 @@ function kb-tmux {
 # WolframScript
 alias wscc="'${WSTP_DIR}'/wscc"
 alias wsprep="'${WSTP_DIR}'/wsprep"
+alias cat="bat -pp"
+alias ls="colorls"
+alias fzf="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 
 # Remind me of the aliases
 function remind-me {

@@ -13,6 +13,9 @@ export LINUX="Linux"
 # Modify default output
 export PS1="%B%F{cyan}%n%f%b %F{red}%D %* %~%f"$'\n'"%B$%b "
 
+# bat theme
+export BAT_THEME="Monokai Extended Origin"
+
 # Add color support
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
