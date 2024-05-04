@@ -162,6 +162,9 @@ case $SYSTEM in
 esac
 
 ### Run last
+#colorls
+[ -f $(command -v colorls) ] && source $(dirname $(gem which colorls))/tab_complete.sh
+
 # Aliases (some reused variables are defined above)
 [ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
 
