@@ -23,6 +23,15 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export PS1="%F{green}%n%f %F{yellow}%D{%Y-%m-%d}%f %F{magenta}%D{%H:%M:%S}%f %F{blue}%~%f"$'\n'"$ "
 
+if [[ ! -d "${HOME}/.zsh/zsh-autosuggestions" ]]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME}/.zsh/zsh-autosuggestions
+fi
+if [[ ! -d "${HOME}/.zsh/zsh-syntax-highlighting" ]]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting ${HOME}/.zsh/zsh-syntax-highlighting
+fi
+source ${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ${HOME}/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 function get_python_version() {
   python3 -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")'
 }
