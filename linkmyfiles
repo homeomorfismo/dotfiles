@@ -1,0 +1,40 @@
+#!/bin/sh
+
+DOTFILES="${HOME}/dotfiles"
+BACKUP_DIR="${HOME}/dotfiles_backup/$(date -u +%Y%m%d_%H%M%S)"
+
+mkdir -p "${BACKUP_DIR}"
+link_file() {
+    src="$1"
+    dest="$2"
+    dest_dir=$(dirname "$dest")
+    
+    if [ ! -d "${dest_dir}" ]; then
+        mkdir -p "${dest_dir}"
+    fi
+    
+    if [ -e "${dest}" ] && [ ! -L "${dest}" ]; then
+        mv "${dest}" "${BACKUP_DIR}/"
+        printf "Backed up: %s -> %s/%s\n" "${dest}" "${BACKUP_DIR}" "$(basename "${dest}")"
+    fi
+    
+    if [ -L "${dest}" ]; then
+        rm "${dest}"
+    fi
+    
+    ln -s "${src}" "${dest}"
+    printf "Linked: %s -> %s\n" "${src}" "${dest}"
+}
+
+cd "${DOTFILES}" || exit 1
+
+find . -type f -o -type d | while IFS= read -r file; do
+    [ "$file" = "." ] && continue
+    file="${file#./}"
+    case "$file" in
+        .git*) continue ;;
+    esac
+    link_file "${DOTFILES}/${file}" "${HOME}/${file}"
+done
+
+printf "Backup created at: %s\n" "${BACKUP_DIR}"

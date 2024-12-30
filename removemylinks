@@ -1,0 +1,26 @@
+#!/bin/sh
+
+DOTFILES="${HOME}/dotfiles"
+
+if [ ! -d "${DOTFILES}" ]; then
+    printf "Error: Dotfiles directory not found at %s\n" "${DOTFILES}" >&2
+    exit 1
+fi
+
+printf "Removing symlinks that point to %s\n" "${DOTFILES}"
+printf "Started at: %s\n" "$(date -u "+%Y-%m-%d %H:%M:%S")"
+
+find "${HOME}" -type l -print | while IFS= read -r link; do
+    target=$(readlink "${link}")
+    case "${target}" in
+        "${DOTFILES}"*)
+            if rm "${link}"; then
+                printf "Removed: %s -> %s\n" "${link}" "${target}"
+            else
+                printf "Failed to remove: %s\n" "${link}" >&2
+            fi
+            ;;
+    esac
+done
+
+printf "Finished at: %s\n" "$(date -u "+%Y-%m-%d %H:%M:%S")"

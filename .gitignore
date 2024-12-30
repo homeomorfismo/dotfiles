@@ -1,3 +1,2 @@
-.config/nvim/plugin/packer_compiled.lua
-.config/nvim/lua/core
 node_modules
+.config/github-copilot

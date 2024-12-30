@@ -23,6 +23,7 @@ Run the provided script:
 
 ```bash
 ./linkmyfiles
+# ./removemylinks
 ```
 
 ## Helix and Neovim
@@ -43,7 +44,8 @@ The `.gitconfig` is simple, but _who doesn't like instant ramen?_
 
 ## TODOs
 
-- [ ] Check correctness for `stow` usage
+- [ ] Check correctness for `stow` usage.
+- [ ] Check correctness for manual install.
 - [ ] Make a submodule for Nerdfonts...
 - [ ] Write recovery scripts for:
     - [ ] MacOS
