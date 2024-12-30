@@ -1,0 +1,45 @@
+theme = "adwaita-dark"
+
+[editor]
+scrolloff = 3
+mouse = false
+scroll-lines = 5
+
+shell = ["zsh", "-c"]
+
+line-number = "relative"
+cursorline = true
+cursorcolumn = true
+
+# gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+auto-completion = true
+auto-format = true
+preview-completion-insert = true
+completion-trigger-len = 3
+completion-replace = true
+
+auto-info = true
+
+bufferline = "multiple"
+
+text-width = 80
+insert-final-newline = false
+
+popup-border = "all"
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+enable = true
+auto-signature-help = true
+
+[editor.auto-save]
+focus-lost = true
+
+[editor.soft-wrap]
+enable = true
+max-wrap = 10
+max-indent-retain = 30

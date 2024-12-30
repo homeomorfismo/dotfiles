@@ -1,177 +1,75 @@
-# .zshrc
-# This file is sourced by zsh when it starts. It sets up the shell environment
-# and defines some useful functions and aliases.
-# Author: Gabriel Pinochet-Soto
-
-### Environment
-# Define operating system
 export SYSTEM=$(uname)
 export MACOS="Darwin"
 export LINUX="Linux"
 
-### Standard settings
-# Modify default output
-export PS1="%B%F{cyan}%n%f%b %F{red}%D %* %~%f"$'\n'"%B$%b "
-
-# bat theme
-export BAT_THEME="Monokai Extended Origin"
-
-# Add color support
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
-
-# Autocomplete for git
-autoload -Uz compinit && compinit
-
-# Branch for git
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
+precmd_vcs_info() {
+  vcs_info
+}
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%f%F{red}%u%f%F{green}%c%f'
+zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f%F{red}%u%f%F{green}%c%f'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr '●'
+zstyle ':vcs_info:*' stagedstr '✓'
+
 RPROMPT='${vcs_info_msg_0_}'
-# PROMPT='${vcs_info_msg_0_}%# '
-zstyle ':vcs_info:git:*' formats '%b'
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+autoload -U colors && colors
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export PS1="%F{green}%n%f %F{yellow}%D{%Y-%m-%d}%f %F{magenta}%D{%H:%M:%S}%f %F{blue}%~%f"$'\n'"$ "
 
-### Standard paths
-# Add some binaries
-export PATH=/usr/local/bin:$PATH
+function get_python_version() {
+  python3 -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")'
+}
 
-# Define software paths
-export SOFTWARE=${HOME}/Software
-if [ ! -d ${SOFTWARE} ]; then
-    echo "Creating ${SOFTWARE}"
-    mkdir -p ${SOFTWARE}
+function activate() {
+  local env_dir="${HOME}/Env/$1"
+  local python_version=$(get_python_version)      
+  if [[ -z "$1" ]]; then
+    echo "Usage: activate <environment_name>"
+    echo "Available environments:"
+    ls -1 "${HOME}/Env" 2>/dev/null || echo "No environments found"
+    return 1
+  fi
+  if [[ ! -d "${env_dir}" ]]; then
+    echo "Error: Environment '$1' not found in ${HOME}/Env"
+    return 1
+  fi
+
+  source "${env_dir}/bin/activate"
+  [[ -d "${env_dir}/lib/${python_version}/site-packages" ]] && \
+    export PYTHONPATH="${env_dir}/lib/${python_version}/site-packages:${PYTHONPATH}"
+}
+
+function mkvenv() {
+  local env_name="$1"
+  local env_dir="${HOME}/Env/${env_name}"
+  
+  if [[ -z "${env_name}" ]]; then
+    echo "Usage: mkvenv <environment_name>"
+    return 1
+  fi
+
+  if [[ -d "${env_dir}" ]]; then
+    echo "Error: Environment '${env_name}' already exists"
+    return 1
+  fi
+
+  mkdir -p "${HOME}/Env"
+  python3 -m venv "${env_dir}"
+  echo "Created virtual environment: ${env_name} using $(get_python_version)"
+  echo "To activate, run: activate ${env_name}"
+}
+
+[[ ! -d "${HOME}/Env" ]] && mkdir -p "${HOME}/Env"
+
+if [[ "${SYSTEM}" == "${MACOS}" ]]; then
+  [[ -f "${HOME}/.macconfig" ]] && source "${HOME}/.macconfig"
+elif [[ "${SYSTEM}" == "${LINUX}" ]]; then
+  [[ -f "${HOME}/.linuxconfig" ]] && source "${HOME}/.linuxconfig"
 fi
-
-# PSU clusters
-export ODIN=gpin2
-export COEUS="${ODIN}"@login1.coeus.rc.pdx.edu
-
-### Non-standard settings
-# Add homebrew in macOS
-if [ $SYSTEM = $MACOS ]; then
-    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
-    eval $(/opt/homebrew/bin/brew shellenv)
-    # Add library paths
-    export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
-    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(brew --prefix)/lib"
-fi
-
-# Add TeX
-case $SYSTEM in
-    $MACOS)
-        if [ -d /Library/TeX/texbin ]; then
-            export PATH=/Library/TeX/texbin:$PATH
-        fi
-        ;;
-    $LINUX)
-        # TODO: Add TeX path for Linux
-        if [ -d /usr/local/texlive/2021/bin/x86_64-linux ]; then
-            export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
-        fi
-        ;;
-esac
-
-# Add CMake
-if [ $SYSTEM = $MACOS ]; then
-    export PATH=/Applications/CMake.app/Contents/bin:$PATH
-fi
-
-# # Add python (see .zprofile)
-# if [ $SYSTEM = $MACOS ]; then
-#     export PATH=/usr/local/bin:$PATH
-# fi
-
-# Add ngsolve, feast paths
-export NGS_DIR=${SOFTWARE}/ngs
-case $SYSTEM in
-    $MACOS)
-        export NETGENDIR=/Applications/Netgen.app/Contents/MacOS
-        export PYTHONPATH=/Applications/Netgen.app/Contents/Resources/lib/python3.12/site-packages:.:${PYTHONPATH}
-        export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$NETGENDIR
-        export DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH:$NETGENDIR/../Frameworks
-        export PATH=$NETGENDIR:$PATH
-        export PYTHONPATH=$PYTHONPATH:/Users/gpin/Software/ngs
-        ;;
-    $LINUX)
-        export NETGENDIR=${NGS_DIR}/install/bin
-        export PYTHONPATH=${NGS_DIR}/install/lib/python3.8/site-packages:.:${PYTHONPATH}
-        ;;
-esac
-
-# Add petsc, slepc paths
-# Must be activated with petsc function, in .zsh_aliases
-export PETSC_DIR=${SOFTWARE}/petsc
-export SLEPC_DIR=${SOFTWARE}/slepc
-case $SYSTEM in
-    $MACOS)
-        export PETSC_ARCH_DEBUG=osx-debug
-        export PETSC_ARCH_RELEASE=osx-release
-        ;;
-    $LINUX)
-        export PETSC_ARCH_DEBUG=linux-debug
-        export PETSC_ARCH_RELEASE=linux-release
-        ;;
-esac
-
-# add FEAST
-export FEASTROOT=${SOFTWARE}/FEAST/4.0
-
-# Astyle
-if [ -d ${SOFTWARE}/astyle-code ]; then
-    case $SYSTEM in
-        $MACOS)
-            export PATH=${SOFTWARE}/astyle-code/AStyle/build/mac/bin:$PATH
-            export ASTYLE=${SOFTWARE}/astyle-code/AStyle/build/mac/bin/AStyle
-            ;;
-        $LINUX)
-            export PATH=${SOFTWARE}/astyle-code/AStyle/build/linux/bin:$PATH
-            export ASTYLE=${SOFTWARE}/astyle-code/AStyle/build/linux/bin/astyle
-            ;;
-    esac
-fi
-
-# ruby
-case $SYSTEM in
-    $MACOS)
-        export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-        if [ -d /opt/homebrew/opt/chruby ]; then
-            source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-            source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-        fi
-        ;;
-    $LINUX)
-        export PATH=/usr/local/ruby/bin:$PATH
-        if [ -d /usr/local/chruby ]; then
-            source /usr/local/chruby/share/chruby/chruby.sh
-            source /usr/local/chruby/share/chruby/auto.sh
-        fi
-        ;;
-esac
-[ $(command -v chruby) ] && chruby ruby-3.1.3
-
-# Add WSTP C/C++ library
-case $SYSTEM in
-    $MACOS)
-        export WSTP_DIR=/Applications/Wolfram\ Engine.app/Contents/Resources/Wolfram\ Player.app/Contents/SystemFiles/Links/WSTP/DeveloperKit/MacOSX-x86-64/CompilerAdditions
-        ;;
-    $LINUX)
-        # TODO: Add WSTP_DIR for Linux
-        export WSTP_DIR=/usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Links/WSTP/DeveloperKit/Linux-x86-64/CompilerAdditions
-        ;;
-esac
-
-### Run last
-#colorls
-[ -f $(command -v colorls) ] && source $(dirname $(gem which colorls))/tab_complete.sh
-
-# Aliases (some reused variables are defined above)
-[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Add zoxide
-[ -f $(command -v zoxide) ] && eval "$(zoxide init zsh)"
-
-# eval "$(oh-my-posh init zsh)"

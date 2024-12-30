@@ -1,0 +1,17 @@
+link-url = true
+fullscreen = true
+working-directory = /Users/urysohn
+auto-update = download
+theme = light:"SpaceGray Bright",dark:"GitHub Dark"
+font-size = 15
+
+unfocused-split-opacity = 0.95
+background-opacity = 1.0
+
+cursor-style = block
+cursor-style-blink = true
+
+confirm-close-surface = true
+macos-option-as-alt = true
+
+font-family = "JetBrains Mono"

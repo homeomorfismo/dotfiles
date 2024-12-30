@@ -1,0 +1,53 @@
+[[ -x "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+(type fzf) >/dev/null 2>&1 && source <(fzf --zsh)
+(type zoxide) >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+(type eza) >/dev/null 2>&1 && alias ls="eza"
+
+if command -v bat >/dev/null; then
+  alias cat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
+fi
+
+export PYENV_ROOT="${HOME}/.pyenv"
+[[ -d ${PYENV_ROOT}/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
+
+if [[ -d "/Applications/Netgen.app" ]]; then
+  netgen_app="/Applications/Netgen.app/Contents"
+  export NETGENDIR="${netgen_app}/MacOS"
+  export PYTHONPATH="${netgen_app}/Resources/lib/python3.8/site-packages:${PYTHONPATH}"
+  export DYLD_LIBRARY_PATH="${NETGENDIR}:${DYLD_LIBRARY_PATH}"
+  export DYLD_FRAMEWORK_PATH="${NETGENDIR}/../Frameworks:${DYLD_FRAMEWORK_PATH}"
+  export PATH="${NETGENDIR}:${PATH}"
+fi
+
+if [[ -d "${HOME}/Software/ngs" ]]; then
+    export FIBERAMPDIR="${HOME}/Software/ngs"
+    export PATH="${FIBERAMPDIR}:${PATH}"
+    export PYTHONPATH="${FIBERAMPDIR}:${PYTHONPATH}"
+fi
+
+if command -v brew >/dev/null; then
+  enzyme_base="/opt/homebrew/Cellar/enzyme"
+  if [[ -d "${enzyme_base}" ]]; then
+    enzyme_version=$(ls -1 "${enzyme_base}" | sort -V | tail -n 1)
+    if [[ -n "${enzyme_version}" ]]; then
+      ENZYME_PATH="${enzyme_base}/${enzyme_version}/lib"
+      [[ -d "${ENZYME_PATH}" ]] && export LD_LIBRARY_PATH="${ENZYME_PATH}:${LD_LIBRARY_PATH}"
+    fi
+  fi
+  llvm_base="/opt/homebrew/Cellar/llvm"
+  if [[ -d "${llvm_base}" ]]; then
+    llvm_version=$(ls -1 "${llvm_base}" | sort -V | tail -n 1)
+    if [[ -n "${llvm_version}" ]]; then
+      export LLVM_DIR="${llvm_base}/${llvm_version}/bin"
+      alias clang-tidy="${LLVM_DIR}/clang-tidy"
+      alias clang-format="${LLVM_DIR}/clang-format"
+    fi
+  fi
+fi
+
+# >>> juliaup initialize >>>
+path=('/Users/urysohn/.juliaup/bin' $path)
+export PATH
+# <<< juliaup initialize <<<
