@@ -3,10 +3,16 @@
     email = gpin2@pdx.edu
 [core]
     editor = nvim
+[init]
+	defaultBranch = main
 [alias]
+	last = log -1 HEAD
+    dlast = diff HEAD^ HEAD
     adog = log --all --decorate --oneline --graph
     dog = log --decorate --oneline --graph
     dg = log --decorate --graph
-    wdiff = diff --word-diff
+    og = log --oneline --graph
+    unstage = reset HEAD --
+    wdiff = diff --word-diff --color-words
     fpush = push --force-with-lease
     ffpush = push --force

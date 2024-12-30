@@ -4,8 +4,9 @@
 (type zoxide) >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 (type eza) >/dev/null 2>&1 && alias ls="eza"
 
+export BAT_THEME="Monokai Extended Origin"
 if command -v bat >/dev/null; then
-  alias cat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
+  alias cat="bat"
 fi
 
 export PYENV_ROOT="${HOME}/.pyenv"
