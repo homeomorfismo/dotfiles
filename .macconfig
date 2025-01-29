@@ -18,7 +18,7 @@ command -v pyenv >/dev/null && eval "$(pyenv init -)"
 if [[ -d "/Applications/Netgen.app" ]]; then
   netgen_app="/Applications/Netgen.app/Contents"
   export NETGENDIR="${netgen_app}/MacOS"
-  export PYTHONPATH="${netgen_app}/Resources/lib/python3.8/site-packages:${PYTHONPATH}"
+  export PYTHONPATH="${netgen_app}/Resources/lib/python3.10/site-packages:${PYTHONPATH}"
   export DYLD_LIBRARY_PATH="${NETGENDIR}:${DYLD_LIBRARY_PATH}"
   export DYLD_FRAMEWORK_PATH="${NETGENDIR}/../Frameworks:${DYLD_FRAMEWORK_PATH}"
   export PATH="${NETGENDIR}:${PATH}"
@@ -44,8 +44,7 @@ if command -v brew >/dev/null; then
     llvm_version=$(ls -1 "${llvm_base}" | sort -V | tail -n 1)
     if [[ -n "${llvm_version}" ]]; then
       export LLVM_DIR="${llvm_base}/${llvm_version}/bin"
-      alias clang-tidy="${LLVM_DIR}/clang-tidy"
-      alias clang-format="${LLVM_DIR}/clang-format"
+      export PATH="${LLVM_DIR}:${PATH}"
     fi
   fi
 fi
