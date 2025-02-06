@@ -47,8 +47,10 @@ if command -v brew >/dev/null; then
   if [[ -d "${llvm_base}" ]]; then
     llvm_version=$(ls -1 "${llvm_base}" | sort -V | tail -n 1)
     if [[ -n "${llvm_version}" ]]; then
-      export LLVM_DIR="${llvm_base}/${llvm_version}/bin"
-      export PATH="${LLVM_DIR}:${PATH}"
+      export LLVM_DIR="${llvm_base}/${llvm_version}"
+      export PATH="${LLVM_DIR}/bin:${PATH}"
+      export LDFLAGS="-L${LLVM_DIR}/lib ${LDFLAGS}"
+      export CPPFLAGS="-I${LLVM_DIR}/include ${CPPFLAGS}"
     fi
   fi
 fi
