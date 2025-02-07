@@ -55,6 +55,14 @@ if command -v brew >/dev/null; then
   fi
 fi
 
+current_second=$(date +%S)
+random_number=$(awk 'BEGIN{srand(); print int(rand() * 60)}')
+if command -v fastfetch >/dev/null 2>&1; then
+    if [ "$current_second" -eq "$random_number" ]; then
+        fastfetch
+    fi
+fi
+
 # >>> juliaup initialize >>>
 path=('/Users/urysohn/.juliaup/bin' $path)
 export PATH
