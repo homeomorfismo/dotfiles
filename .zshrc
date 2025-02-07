@@ -21,7 +21,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 autoload -U colors && colors
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export PS1="%F{green}%n%f %F{yellow}%D{%Y-%m-%d}%f %F{magenta}%D{%H:%M:%S}%f %F{blue}%~%f"$'\n'"$ "
+export PS1="%F{green}%n@%m%f %F{yellow}%D{%Y-%m-%d}%f %F{magenta}%D{%H:%M:%S}%f %F{blue}%~%f"$'\n'"$ "
+
 
 if [[ ! -d "${HOME}/.zsh/zsh-autosuggestions" ]]; then
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
