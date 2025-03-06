@@ -147,6 +147,28 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Setup Harper as LSP
+local configs = require 'lspconfig/configs'
+local util = require 'lspconfig/util'
+
+if not configs.harper then
+  configs.harper = {
+    default_config = {
+      cmd = {'harper', 'lsp'},
+      filetypes = {'markdown', 'tex'},
+      root_dir = function(fname)
+        return util.find_git_ancestor(fname) or util.path.dirname(fname)
+      end,
+      settings = {},
+    },
+  }
+end
+
+lspconfig.harper.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
 -- Completion setup
 local cmp = require('cmp')
 cmp.setup({
@@ -181,8 +203,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- VimTex Configuration
 vim.g.vimtex_compiler_method = 'latexmk'
 -- shell escape for minted
--- vim.g.vimtex_latexmk_options = '-pdf -shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
--- vim.g.vimtex_compiler_latexmk = { 'aux_dir' : '', 'out_dir' : '', 'callback' : 1, 'continuous' : 1, 'executable' : 'latexmk', 'hooks' : [], 'options' : [ '-pdf', '-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode', ], }
 vim.g.vimtex_compiler_latexmk = {
   executable = 'latexmk',
   continuous = 1,
@@ -219,6 +239,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
 -- Additional keybindings
 vim.keymap.set('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })

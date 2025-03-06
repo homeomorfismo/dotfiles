@@ -12,7 +12,10 @@ export PICO_SDK_PATH="${HOME}/Repositories/pico-sdk"
 
 export BAT_THEME="Monokai Extended Origin"
 if command -v bat >/dev/null; then
-  alias cat="bat"
+    alias cat="bat"
+    function man() {
+        command man "$@" | col -bx | bat --paging=always --language=man
+    }
 fi
 
 export PYENV_ROOT="${HOME}/.pyenv"
